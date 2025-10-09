@@ -8,6 +8,8 @@ typedef struct {
     float area; // Área em km²
     float pib; // PIB em bilhões
     int pontosTuristicos; // Número de pontos turísticos
+    float densidade populacional[50]; // Densidade 
+    float pib percapta;// PiB percapta
 } Carta;
 
 int main() {
@@ -39,6 +41,12 @@ int main() {
 
             printf("Número de pontos turísticos: ");
             scanf("%d", &c->pontosTuristicos);
+
+            printf("Densidade populacional ");
+            scanf("%f", &c->densidade);
+
+            printf("PIB percapta: ");
+            scanf("%f", &c->percapta
         }
     }
 
@@ -54,6 +62,8 @@ int main() {
             printf("Área: %.2f km²\n", c.area);
             printf("PIB: %.2f bilhões\n", c.pib);
             printf("Pontos turísticos: %d\n", c.pontosTuristicos);
+            printf("Densidade poulacional: %f\n", c.Densidadepopulacional);
+            printf("PIB Percapta: %f\n", c.pibpercapta);
         }
     }
 
