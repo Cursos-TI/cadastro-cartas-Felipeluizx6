@@ -2,14 +2,14 @@
 #include <string.h>
 
 typedef struct {
-    char codigo[4]; // Ex: A01
-    char nome[50]; // Nome da cidade
-    int populacao; // População
-    float area; // Área em km²
-    float pib; // PIB em bilhões
-    int pontosTuristicos; // Número de pontos turísticos
-    float densidade populacional[50]; // Densidade 
-    float pib percapta;// PiB percapta
+    char codigo[4];             // Ex: A01
+    char nome[50];              // Nome da cidade
+    int populacao;              // População
+    float area;                 // Área em km²
+    float pib;                  // PIB em bilhões
+    int pontosTuristicos;       // Número de pontos turísticos
+    float densidadePopulacional;// Densidade populacional
+    float pibPerCapita;         // PIB per capita
 } Carta;
 
 int main() {
@@ -28,7 +28,7 @@ int main() {
 
             printf("\nCidade %d do estado %c:\n", j+1, estados[i]);
             printf("Nome: ");
-            scanf(" %[^\n]", c->nome); // Lê string com espaços
+            scanf(" %[^\n]", c->nome); // Corrigido para ler string com espaços
 
             printf("População: ");
             scanf("%d", &c->populacao);
@@ -42,11 +42,9 @@ int main() {
             printf("Número de pontos turísticos: ");
             scanf("%d", &c->pontosTuristicos);
 
-            printf("Densidade populacional ");
-            scanf("%f", &c->densidade);
-
-            printf("PIB percapta: ");
-            scanf("%f", &c->percapta
+            // Cálculos automáticos:
+            c->densidadePopulacional = c->populacao / c->area;
+            c->pibPerCapita = (c->pib * 1000000000) / c->populacao; // PIB de bilhões p/ reais per capita
         }
     }
 
@@ -62,8 +60,8 @@ int main() {
             printf("Área: %.2f km²\n", c.area);
             printf("PIB: %.2f bilhões\n", c.pib);
             printf("Pontos turísticos: %d\n", c.pontosTuristicos);
-            printf("Densidade poulacional: %f\n", c.Densidadepopulacional);
-            printf("PIB Percapta: %f\n", c.pibpercapta);
+            printf("Densidade populacional: %.2f hab/km²\n", c.densidadePopulacional);
+            printf("PIB per capita: R$ %.2f\n", c.pibPerCapita);
         }
     }
 
