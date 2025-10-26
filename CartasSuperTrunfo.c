@@ -1,3 +1,4 @@
+//CARTAS SUPER TRUNFO C
 #include <stdio.h>
 #include <string.h>
 
