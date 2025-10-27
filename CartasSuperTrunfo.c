@@ -1,69 +1,90 @@
-//CARTAS SUPER TRUNFO C
 #include <stdio.h>
-#include <string.h>
 
 typedef struct {
-    char codigo[4];             // Ex: A01
-    char nome[50];              // Nome da cidade
-    int populacao;              // População
-    float area;                 // Área em km²
-    float pib;                  // PIB em bilhões
-    int pontosTuristicos;       // Número de pontos turísticos
-    float densidadePopulacional;// Densidade populacional
-    float pibPerCapita;         // PIB per capita
-    float floa;                 // Carta de superpoder (soma ponderada)
+    char estado[3];
+    char codigo[5];
+    char nome[50];
+    int populacao;
+    float area;
+    float pib;
+    int pontosTuristicos;
+    float densidadePopulacional;
+    float pibPerCapita;
 } Carta;
 
-// Função para calcular o superpoder da carta (soma dos principais atributos)
-float calcularSuperPoder(Carta c) {
-    return (c.populacao / 1000.0) + c.area + (c.pib * 10.0) + 
-           (c.pibPerCapita / 1000.0) + (1.0 / (c.densidadePopulacional + 1)) +
-           (c.pontosTuristicos * 10.0);
-}
+int main() {
+    // --- Cadastro de duas cartas pré-definidas ---
+    Carta carta1 = {"SP", "A01", "São Paulo", 12300000, 1521.0, 699.0, 50, 0, 0};
+    Carta carta2 = {"RJ", "B01", "Rio de Janeiro", 6000000, 1182.0, 500.0, 30, 0, 0};
 
-// Função de comparação entre duas cartas
-int compararCartas(Carta c1, Carta c2, int atributo) {
-    float valor1 = 0, valor2 = 0;
+    // --- Cálculos automáticos ---
+    carta1.densidadePopulacional = carta1.populacao / carta1.area; // Calcula densidade populacional
+    carta1.pibPerCapita = (carta1.pib * 1000000000) / carta1.populacao; // Calcula PIB per capita
 
-    switch (atributo) {
-        case 1: // População
-            valor1 = c1.populacao; valor2 = c2.populacao; break;
-        case 2: // Área
-            valor1 = c1.area; valor2 = c2.area; break;
-        case 3: // PIB
-            valor1 = c1.pib; valor2 = c2.pib; break;
-        case 4: // PIB per capita
-            valor1 = c1.pibPerCapita; valor2 = c2.pibPerCapita; break;
-        case 5: // Densidade populacional (menor vence → invertido)
-            valor1 = 1.0 / c1.densidadePopulacional;
-            valor2 = 1.0 / c2.densidadePopulacional;
-            break;
-        case 6: // Pontos turísticos
-            valor1 = c1.pontosTuristicos; valor2 = c2.pontosTuristicos; break;
-        case 7: // Superpoder floa
-            valor1 = c1.floa; valor2 = c2.floa; break;
-        default:
-            printf("Atributo inválido!\n");
-            return -1;
+    carta2.densidadePopulacional = carta2.populacao / carta2.area; // Calcula densidade populacional
+    carta2.pibPerCapita = (carta2.pib * 1000000000) / carta2.populacao; // Calcula PIB per capita
+
+    // --- Atributo para comparação definido no código ---
+    // 1 - População, 2 - Área, 3 - PIB, 4 - Densidade Populacional, 5 - PIB per capita
+    int atributo = 1; // Exemplo: População
+
+    printf("Comparação de cartas (Atributo: ");
+    if (atributo == 1) printf("População)\n"); // IF acrescentado para exibir o nome do atributo
+    else if (atributo == 2) printf("Área)\n"); // IF-ELSE acrescentado
+    else if (atributo == 3) printf("PIB)\n"); // IF-ELSE acrescentado
+    else if (atributo == 4) printf("Densidade Populacional)\n"); // IF-ELSE acrescentado
+    else if (atributo == 5) printf("PIB per capita)\n"); // IF-ELSE acrescentado
+
+    // --- Exibe os valores das cartas para o atributo escolhido ---
+    printf("Carta 1 - %s (%s): ", carta1.nome, carta1.estado);
+    if (atributo == 1) printf("%d\n", carta1.populacao); // IF acrescentado
+    else if (atributo == 2) printf("%.2f\n", carta1.area); // IF-ELSE acrescentado
+    else if (atributo == 3) printf("%.2f\n", carta1.pib); // IF-ELSE acrescentado
+    else if (atributo == 4) printf("%.2f\n", carta1.densidadePopulacional); // IF-ELSE acrescentado
+    else if (atributo == 5) printf("%.2f\n", carta1.pibPerCapita); // IF-ELSE acrescentado
+
+    printf("Carta 2 - %s (%s): ", carta2.nome, carta2.estado);
+    if (atributo == 1) printf("%d\n", carta2.populacao); // IF acrescentado
+    else if (atributo == 2) printf("%.2f\n", carta2.area); // IF-ELSE acrescentado
+    else if (atributo == 3) printf("%.2f\n", carta2.pib); // IF-ELSE acrescentado
+    else if (atributo == 4) printf("%.2f\n", carta2.densidadePopulacional); // IF-ELSE acrescentado
+    else if (atributo == 5) printf("%.2f\n", carta2.pibPerCapita); // IF-ELSE acrescentado
+
+    // --- Lógica de comparação com IF e IF-ELSE ---
+    int vencedor = 0; // 1 -> carta1 vence, 2 -> carta2 vence, 0 -> empate
+
+    if (atributo == 4) { // IF acrescentado: Densidade Populacional -> menor vence
+        if (carta1.densidadePopulacional < carta2.densidadePopulacional) vencedor = 1; // IF interno acrescentado
+        else if (carta1.densidadePopulacional > carta2.densidadePopulacional) vencedor = 2; // IF-ELSE interno acrescentado
+        else vencedor = 0; // IF-ELSE interno acrescentado: empate
+    } else { // IF-ELSE acrescentado: demais atributos -> maior vence
+        if (atributo == 1) { // IF acrescentado para população
+            if (carta1.populacao > carta2.populacao) vencedor = 1; // IF interno
+            else if (carta1.populacao < carta2.populacao) vencedor = 2; // IF-ELSE interno
+            else vencedor = 0; // empate
+        } 
+        else if (atributo == 2) { // IF-ELSE para área
+            if (carta1.area > carta2.area) vencedor = 1;
+            else if (carta1.area < carta2.area) vencedor = 2;
+            else vencedor = 0;
+        }
+        else if (atributo == 3) { // IF-ELSE para PIB
+            if (carta1.pib > carta2.pib) vencedor = 1;
+            else if (carta1.pib < carta2.pib) vencedor = 2;
+            else vencedor = 0;
+        }
+        else if (atributo == 5) { // IF-ELSE para PIB per capita
+            if (carta1.pibPerCapita > carta2.pibPerCapita) vencedor = 1;
+            else if (carta1.pibPerCapita < carta2.pibPerCapita) vencedor = 2;
+            else vencedor = 0;
+        }
     }
 
-    // Retorna 1 se carta 1 venceu, 0 se carta 2 venceu
-    return (valor1 > valor2) ? 1 : 0;
+    // --- Exibe o resultado da comparação ---
+    if (vencedor == 1) printf("Resultado: Carta 1 (%s) venceu!\n", carta1.nome); // IF acrescentado
+    else if (vencedor == 2) printf("Resultado: Carta 2 (%s) venceu!\n", carta2.nome); // IF-ELSE acrescentado
+    else printf("Resultado: Empate!\n"); // IF-ELSE final para empate
+
+    return 0;
 }
 
-int main() {
-    Carta cartas[8][4]; // 8 estados, 4 cidades cada
-    char estados[] = {'A','B','C','D','E','F','G','H'};
-
-    printf("=== Cadastro de cartas - Super Trunfo: Países (Modo Comparação) ===\n");
-
-    // Cadastro das cidades
-    for(int i=0; i<8; i++){
-        printf("\n--- Estado %c ---\n", estados[i]);
-        for(int j=0; j<4; j++){
-            Carta *c = &cartas[i][j];
-            sprintf(c->codigo, "%c0%d", estados[i], j+1);
-
-            printf("\nCidade %d do estado %c:\n", j+1, estados[i]);
-            printf("Nome: ");
-            scanf(" %[^\n]", c->nome);
